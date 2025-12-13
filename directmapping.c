@@ -48,7 +48,6 @@ int main() {
         offset = address % BLOCK_SIZE;
 
         printf("\nAddress Details:");
-        printf("\n----------------");
         printf("\nAddress        : %hu", address);
         printf("\nBlock Number   : %d", blockNumber);
         printf("\nCache Line     : %d", index);
@@ -67,7 +66,6 @@ int main() {
         }
 
         printf("\nCurrent Cache State:\n");
-        printf("--------------------\n");
         for (int i = 0; i < CACHE_LINES; i++) {
             if (valid[i])
                 printf("Line %d -> Block %d (Tag %d)\n", i, cache[i], tag[i]);
