@@ -1,7 +1,5 @@
-# LFU Page Replacement Algorithm with Hit/Miss Count and Hit Ratio
-
-cache = []        # stores pages
-frequency = []    # frequency counters
+cache = []  
+frequency = []    
 cache_size = int(input("Enter cache size: "))
 
 reference_string = list(map(str, input("Enter access sequence (space separated): ").split()))
@@ -15,7 +13,6 @@ for page in reference_string:
 
     print(f"\nAccessing: {page}")
 
-    # CASE 1: HIT
     if page in cache:
         index = cache.index(page)
         frequency[index] += 1
@@ -23,7 +20,7 @@ for page in reference_string:
         print("Status: HIT")
 
     else:
-        # MISS / PAGE FAULT
+    
         page_faults += 1
         print("Status: MISS / FAULT")
 
@@ -32,7 +29,6 @@ for page in reference_string:
             frequency.append(1)
 
         else:
-            # Remove page with lowest frequency
             min_freq = min(frequency)
             remove_index = frequency.index(min_freq)
 
@@ -45,7 +41,6 @@ for page in reference_string:
     print("Cache   :", cache)
     print("Freq    :", frequency)
 
-# ---- Final Summary ----
 total = len(reference_string)
 hit_ratio = page_hits / total
 
