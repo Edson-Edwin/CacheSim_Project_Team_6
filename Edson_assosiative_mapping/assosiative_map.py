@@ -1,56 +1,69 @@
-import random
+from collections import deque
 
-CACHE_LINES = 4
-cache = [{'valid': 0, 'tag': None} for _ in range(CACHE_LINES)]
-fifo_queue = []   # tracks replacement order for FIFO
+class FullyAssociativeCache:
+    def __init__(self, cache_size, policy="FIFO"):
+        self.cache_size = cache_size
+        self.policy = policy.upper()
+        self.cache = deque()
+        self.hits = 0
+        self.misses = 0
 
-def display_cache():
-    print("\nCache State:")
-    print("Line\tValid\tTag")
-    for i, line in enumerate(cache):
-        print(f"{i}\t{line['valid']}\t{line['tag']}")
-    print()
+    def access_block(self, block):
+        print(f"\nMemory Block Referenced: {block}")
 
-def search_cache(tag):
-    for i, line in enumerate(cache):
-        if line['valid'] == 1 and line['tag'] == tag:
-            return i
-    return -1
+        # Cache HIT
+        if block in self.cache:
+            self.hits += 1
+            print("Status : HIT")
 
-def replace_block(tag):
-    # If cache not full, use next free line
-    if len(fifo_queue) < CACHE_LINES:
-        line = len(fifo_queue)
-    else:
-        # FIFO replacement
-        line = fifo_queue.pop(0)
-    fifo_queue.append(line)
+            # LRU update
+            if self.policy == "LRU":
+                self.cache.remove(block)
+                self.cache.append(block)
 
-    cache[line]['valid'] = 1
-    cache[line]['tag'] = tag
-    return line
+        # Cache MISS
+        else:
+            self.misses += 1
+            print("Status : MISS")
 
-def access_memory(block):
-    tag = block  # fully associative → tag = block number
+            # Cache replacement if full
+            if len(self.cache) == self.cache_size:
+                removed = self.cache.popleft()
+                print(f"Evicted Block : {removed}")
 
-    print(f"Accessing block {block}")
+            self.cache.append(block)
 
-    line = search_cache(tag)
+        print(f"Cache Content : {list(self.cache)}")
 
-    if line != -1:
-        print(f"→ HIT at line {line}")
-    else:
-        print("→ MISS, loading block...")
-        line = replace_block(tag)
-        print(f"→ Block loaded into line {line}")
+    def hit_ratio(self):
+        total = self.hits + self.misses
+        return self.hits / total if total != 0 else 0
 
-    display_cache()
+    def display_summary(self):
+        print("\n========== CACHE SUMMARY ==========")
+        print(f"Cache Size     : {self.cache_size}")
+        print(f"Policy Used    : {self.policy}")
+        print(f"Total Hits     : {self.hits}")
+        print(f"Total Misses   : {self.misses}")
+        print(f"Hit Ratio      : {self.hit_ratio():.2f}")
+        print("==================================")
 
-# Example accesses
-access_memory(3)
-access_memory(7)
-access_memory(3)
-access_memory(15)
-access_memory(7)
-access_memory(1)
+# ---------------- MAIN PROGRAM ----------------
 
+def main():
+    cache_size = int(input("Enter cache size: "))
+    policy = input("Enter replacement policy (FIFO / LRU): ").strip()
+
+    cache = FullyAssociativeCache(cache_size, policy)
+
+    sequence = list(map(int, input("Enter memory block sequence: ").split()))
+
+    print("\n----- Cache Simulation Started -----")
+
+    for block in sequence:
+        cache.access_block(block)
+
+    cache.display_summary()
+
+if __name__ == "__main__":
+    main()
