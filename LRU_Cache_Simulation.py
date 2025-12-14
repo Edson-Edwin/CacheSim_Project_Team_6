@@ -3,32 +3,32 @@ from collections import deque
 class LRUCache:
     def __init__(self, cache_size):
         self.cache_size = cache_size
-        self.cache = []               # Stores the cache blocks
-        self.access_order = deque()   # Tracks usage order (for LRU)
+        self.cache = []               # Stores cache blocks
+        self.access_order = deque()   # Tracks usage order for LRU
         self.hits = 0
         self.misses = 0
 
-    def access_block(self, block):
+    def access_block(self, block, step):
         if block in self.cache:
             self.hits += 1
-            print(f"Accessing {block}: HIT")
+            hit_miss = "HIT"
             # Update access order
             self.access_order.remove(block)
             self.access_order.append(block)
         else:
             self.misses += 1
-            print(f"Accessing {block}: MISS")
+            hit_miss = "MISS"
             if len(self.cache) < self.cache_size:
                 self.cache.append(block)
             else:
-                # Remove least recently used block
+                # Replace least recently used block
                 lru_block = self.access_order.popleft()
-                print(f"Replacing block {lru_block} with {block}")
                 self.cache.remove(lru_block)
                 self.cache.append(block)
             self.access_order.append(block)
-
-        print(f"Cache Content: {self.cache}\n")
+        
+        # Print in tabular format
+        print(f"{step:<5} {block:<15} {hit_miss:<10} {self.cache}")
 
     def get_hit_ratio(self):
         total_accesses = self.hits + self.misses
@@ -36,20 +36,25 @@ class LRUCache:
 
 # -------------------- Main Program --------------------
 def main():
-    print("LRU Cache Memory Simulation\n")
+    print("\nLRU Cache Memory Simulation\n")
     cache_size = int(input("Enter cache size: "))
     reference_sequence = list(map(int, input("Enter memory reference sequence (space separated): ").split()))
 
     cache = LRUCache(cache_size)
 
     print("\nSimulation Start\n")
-    for block in reference_sequence:
-        cache.access_block(block)
+    print(f"{'Step':<5} {'Accessed Block':<15} {'Hit/Miss':<10} {'Cache Content'}")
+    print("-" * 50)
 
-    print("Simulation Complete")
-    print(f"Total Hits: {cache.hits}")
-    print(f"Total Misses: {cache.misses}")
-    print(f"Hit Ratio: {cache.get_hit_ratio():.2f}")
+    for i, block in enumerate(reference_sequence, start=1):
+        cache.access_block(block, i)
+
+    print("\nSimulation Complete")
+    print("-" * 50)
+    print(f"{'Total Hits':<20}: {cache.hits}")
+    print(f"{'Total Misses':<20}: {cache.misses}")
+    print(f"{'Hit Ratio':<20}: {cache.get_hit_ratio():.2f}")
+    print("-" * 50)
 
 if __name__ == "__main__":
     main()
