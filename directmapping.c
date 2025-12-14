@@ -75,8 +75,11 @@ int main() {
 
         printf("\nTotal Hits   : %d", hits);
         printf("\nTotal Misses : %d\n", misses);
+        
+        float hitRatio = (hits + misses) ? (float)hits / (hits + misses) : 0;
+        printf("Hit Ratio    : %.2f\n", hitRatio);
     }
-
+  
     printf("\nSimulation Ended.\n");
     return 0;
 }
