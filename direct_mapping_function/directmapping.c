@@ -20,7 +20,7 @@ int main() {
     }
 
     while (1) {
-        printf("\n--- DIRECT MAPPED CACHE SIMULATION ---");
+        printf("\n------ DIRECT MAPPED CACHE SIMULATION -----");
         printf("\n1. Enter memory address");
         printf("\n2. Exit");
         printf("\nEnter choice: ");
