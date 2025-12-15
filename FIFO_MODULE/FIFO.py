@@ -33,7 +33,7 @@ class FIFOCache:
         
 
 cache_size = 3
-reference_string = [1, 2, 3, 2, 4, 1, 5, 2]
+reference_string = [1, 2, 3, 2, 4, 1, 5, 3]
 
 fifo = FIFOCache(cache_size)
 
