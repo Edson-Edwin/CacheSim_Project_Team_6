@@ -21,9 +21,5 @@ Cache memory plays a critical role in improving system performance by reducing m
 * **Fathima Irfana** – LRU (Least Recently Used) Replacement Algorithm
 
 
-The cache block that has not been accessed for the longest time is replaced.
 
-### 3. LFU (Least Frequently Used)
-
-The cache block with the lowest access frequency is replaced.
 
