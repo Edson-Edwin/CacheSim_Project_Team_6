@@ -14,11 +14,13 @@ Cache memory plays a critical role in improving system performance by reducing m
 
 ## Team Members and Roles
 
-* **Gayathri M** – LFU (Least Frequently Used) Replacement Algorithm
-* **Elizabeth Mathew** – Direct Mapping Technique
-* **Feba Biju** – FIFO (First In First Out) Replacement Algorithm
 * **Edson Edwin Ninan** – Associative Mapping Technique
+* **Elizabeth Mathew** – Direct Mapping Technique
 * **Fathima Irfana** – LRU (Least Recently Used) Replacement Algorithm
+* **Feba Biju** – FIFO (First In First Out) Replacement Algorithm
+* **Gayathri M** – LFU (Least Frequently Used) Replacement Algorithm
+
+
 
 ---
 
